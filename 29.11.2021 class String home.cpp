@@ -1,135 +1,178 @@
 ﻿#include <iostream>
-#include <string>
+#include <string.h>
 #include<cstring>
 #include<Windows.h>
 using namespace std;
 
+
 class String
 {
+
 private:
     char* ch;
-    char* s;
- 
-    string d;
-    string j;
-    string e=" ";
-    string a;
-    const int SIZE = 80;
 public:
+   
+     
+   
+    
+
     String() 
     {
-       
-        ch= new char[SIZE];
-        s = new char [SIZE];
+        int SIZE = 80;
+        ch = new char[SIZE] {};
+      
      
       
     }
-    String(char* ch,char*s)
+    String(int size)
     {
-       ch = new char;
-       s = new char;
+        ch = new char[size]{};
+       
     }
 
-    String(const String& ch, const String &s)
-    {}
-    
-    void Initialization()
+    String( const   char* string )
+        
     {
-       
-       
-        cout << "Enter first string: ";
-        cin.getline(ch, 80);
-        cout<< endl;
-        cout << "Enter second string: ";
-        cin.getline(s, 80);
-       
+        ch = new char[strlen(string) + 1];
+        strcpy_s(this->ch, strlen(string) + 1, string);
     }
+    
+
     void Show() const
     {
-        cout << "String1: " << ch<< endl;
-        cout << "String2: " << s << endl;
+        cout  << ch<< endl;
+        
     }
-    void association()
+    String(const String& a)
+        :String(a.ch)
     {
-       
-        cout << "Association String(1&2): ";
-         strcat_s(ch, 80,s);
-        cout << ch << endl;
-        Sleep(2000);
+        cout << "Ctor worked\n";
+    }
+    String association(const String&other)
+    {
+      
+        
+        int size = strlen(this->ch) + strlen(other.ch) + 1;
+        String str(size);
+        
+        strcat_s(str.ch, size, this->ch);
+
+        strcat_s(str.ch, size, other.ch);
+        return str;
+        
+            
         
      }
-    void cross()
+     String& operator--()
     {
-        system("cls");
-        cout << "Enter  first string:";
-        cin >> d;
-        cout << endl;
-        cout << "Enter second string: ";
-        cin >> j;
-        int count=0;
-        char a1, a2='0';
+         
+        for (int i = 0; i < strlen(this->ch); i++)
+        {
+           this->ch[i]--;
+        }
+        return *this;
+    }
+     String operator--(int d)
+    {
+         String tmp(*this);
+        
+        for (int i = 0; i < strlen(this->ch); i++)
+        {
+            this->ch[i]--;
+        }
       
-        for ( int i = 0; i <= j.length();i++)
-        {
-            for (int x = 0; x < d.length(); x++)
-            {
-                if (j[i] == d[x])
-                {
-                    
-                        a1 = j[i];
-                        if (a1 != a2 )
-                        {
-                            a2 = a1;
-                         
-                                    e.push_back(a1);
-                                
-                           
-                         
-                        }
-                    
-                }
-            }
+        return tmp;
+    }
 
-        }
-        int n,m;
-        for ( n=0; n < e.size(); n++)
+    
+
+
+   friend  ostream& operator <<(ostream& out, const String& obj) 
+    {
+        
+       out << obj.ch;
+      
+        out << endl;
+        return out; 
+    }
+    friend istream& operator >>(istream& in, String& obj) 
+    {
+       
+            in >> obj.ch;
+        
+        return in;
+    }
+    
+ 
+    String cross(const char * v)
+    {
+        String str;
+       
+        int k=0;
+         char z='0';
+         char g='0';
+        
+        for (int i = 0; i < strlen(this->ch); i++)
         {
-            if (e[n] == e[n + 1])
+            for (int j = 0; j < strlen(v); j++)
             {
-                e.erase(n, 1);
+               
+                   
+                    if (this->ch[i] == v[j])
+                    {
+                        g = v[j];
+                        if (g != z)
+                        {
+                            z = g;
+                            str.ch[k++] = v[j];
+                        }
+                    }
+                
             }
+          
         }
-        a = e;
-        for (n = 0; n < e.size(); n++)
-        {
-            for (m=n+1 ; m < a.size()+1; m++)
-            {
-                if (e[n] == a[m])
-                {
-                    a.erase(m, 1);
-                }
-            }
-        }
-        cout << "The same letter of String 1 & 2: "<<a;
- }
+     
+        return str.ch;
+
+ 
+
+    }
+   
     
     ~String()
     {
         delete[] ch;
-        delete[] s;
-       
+        cout << "\nDctor worked\n";
     }
 };
 
 void main()
 {
-    String s;
-    s.Initialization();
-    s.Show();
-    s.association();
-    s.cross();
+    String s{ "string" };
+    String v{ "my" };
     
+    s.Show();
+    v.Show();
+    
+    cin>> s;
+    cout<< s;
+   
+   
+    --s;
+    s.Show();
+    
+   
+    s--;
+    s.Show(); 
+    cout << endl;
+    cout<<"Cross: " << s.cross("interesting");
+    cout << endl; 
+    cout << "Association: "<< s.association(v);
 
+    
+     
+
+   
 
 
     
