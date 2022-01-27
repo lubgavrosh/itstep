@@ -1,0 +1,173 @@
+#include <iostream>
+using namespace std;
+
+
+class Shooter
+{
+protected:
+	string namegun_S{};
+	int amount_ammu_S{};
+
+	
+
+public:
+	Shooter(int amount, string name)
+		:amount_ammu_S(amount), namegun_S(name)
+	{
+
+	}
+void Shoot()
+	{
+		if (amount_ammu_S > 0)
+		{
+			amount_ammu_S = amount_ammu_S - 1;
+			cout << "Shoot" << namegun_S << endl;
+			cout << namegun_S << " = " << amount_ammu_S << endl;
+
+		}
+		else
+		{
+			cout << "Not enough ammunition" << endl;
+		}
+	}
+     
+
+};
+
+class Archer :  public Shooter
+{
+public:
+	
+	Archer(int amout_A)
+		:Shooter(amout_A,"Arrows")
+	{
+
+	}
+	void Shoot()
+	{
+		cout << "\nArcher is shooting" << endl;
+		Shooter::Shoot();
+
+	}
+	
+	
+};
+
+class Renger : public Shooter
+{
+public:
+
+	Renger(int amout_R)
+		:Shooter(amout_R, "Arrows")
+	{
+
+	}
+	void Shoot()
+	{
+		cout << "\nRenger is shooting" << endl;
+		Shooter::Shoot();
+
+
+	}
+	
+
+};
+
+class Catapult : public Shooter
+{
+public:
+
+	Catapult(int amout_C)
+		:Shooter(amout_C, "Stones")
+	{
+
+	}
+	void Shoot()
+	{
+		cout << "\nCatapult is shooting" << endl;
+		Shooter::Shoot();
+
+
+	}
+	
+};
+
+class ArcherTower :  public Archer, public Renger
+{
+protected:
+	int amout_ammu_T;
+public:
+	ArcherTower(int amout_ammu)
+		:Archer(amout_ammu), Renger(amout_ammu), amout_ammu_T(amout_ammu)
+	{
+
+	}
+	void Shoot()
+	{
+		int amout_r,  amout_a;
+		if (amout_ammu_T > 0)
+		{
+
+			
+				cout << "\nAmout ammunition = " << amout_ammu_T << "\n";
+				
+				
+					cout << "Shots from the ranger :";
+					cin >> amout_r;
+					cout << "Shots from the ranger :";
+					cin >> amout_a;
+					if (amout_a + amout_r > amout_ammu_T)
+					{
+						cout << "\nOne of the shooters will not have enough arrows\n";
+						
+					}
+				
+
+			
+
+			for (int i = 0; i < amout_a; i++)
+			{
+				Archer::Shoot();
+				Renger::amount_ammu_S= Renger::amount_ammu_S - 1;
+				amout_ammu_T -= 1;
+			}
+			for (int i = 0; i < amout_r; i++)
+			{
+				Renger::Shoot();
+				amout_ammu_T -= 1;
+			}
+			
+		}
+		else {
+			cout << "\nArrows are over" << endl;
+		}
+	}
+	
+};
+
+
+class Fortress :public ArcherTower, public Catapult
+{
+
+public:
+	Fortress(int amout_Arrows, int amout_Stones)
+		:ArcherTower(amout_Arrows), Catapult(amout_Stones)
+	{}
+	void Shoot()
+	{
+		ArcherTower::Shoot();
+		Catapult::Shoot();
+	}
+	
+	
+};
+
+void main()
+{
+	
+	Fortress a(4, 3);
+	a.Shoot();
+	a.Shoot();
+	 
+	
+}
