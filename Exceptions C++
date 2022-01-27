@@ -1,0 +1,238 @@
+﻿#include <iostream>
+using namespace std;
+
+
+class WrongLengthException
+{
+private:
+	double length{};
+protected:
+
+	double wronglength(double length1)
+	{
+		if (length1 <= 0)
+		{
+			throw "Error Length<500m";
+
+		}
+		else if (length1 >= 15'000000)
+		{
+			throw "Error Length>15'000'000m ";
+		}
+
+		return length = length1;
+
+	}
+public:
+
+	WrongLengthException(double length1)
+	{
+		setlength(length1);
+	}
+
+
+
+	void  setlength(double length1)
+	{
+		try
+		{
+			wronglength(length1);
+		}
+		catch (const char* err)
+		{
+			cout << err << endl;
+		}
+	}
+	void show()
+	{
+		cout << length;
+	}
+};
+
+class WrongDepthException
+{
+private:
+
+	double depth{};
+protected:
+
+	double wrongdepth(double depth1)
+	{
+		if (depth1 <= 0)
+		{
+			throw "Error Depth<0m";
+
+		}
+		else if (depth1 > 11'000)
+		{
+			throw "Error Depth>10'994m ";
+		}
+
+		return depth = depth1;
+
+	}
+
+public:
+
+	WrongDepthException(double depth1)
+	{
+		setdepth(depth1);
+	}
+	void show()
+	{
+		cout << depth;
+	}
+
+	void setdepth(double depth1)
+	{
+		try
+		{
+			wrongdepth(depth1);
+		}
+		catch (const char* err)
+		{
+			cout << err << endl;
+		}
+
+	}
+
+};
+
+
+class WrongWidthException
+{
+private:
+	double width{};
+
+protected:
+	double wrongwidth(double width1)
+	{
+		if (width1 <= 0)
+		{
+			throw "Error Width<=0m";
+
+		}
+		else if (width1 > 18'000)
+		{
+			throw "Error Width>18'000m ";
+		}
+		
+			return width = width1;
+		
+		
+
+	}
+public:
+
+	WrongWidthException(double width1)
+	{
+		setWidth(width1);
+	}
+
+
+
+	void setWidth(double width1)
+	{
+		try
+		{
+			wrongwidth(width1);
+		}
+		catch (const char* err)
+		{
+			cout << err << endl;
+		}
+	}
+	void show()
+	{
+		cout << width;
+	}
+
+};
+
+class WrongTypeException
+{
+private:
+	string type{};
+protected:
+	string wrongtype(string type1)
+	{
+
+		if (type1 == "Lake" || type1 == "River" || type1 == "Sea" || type1 == "Ocean" || type1 == "lake" || type1 == "river" || type1 == "sea" || type1 == "ocean")
+		{
+			return type = type1;
+		}
+		else {
+			throw "Error Type is not one from there: Lake, River, Sea, Ocean";
+		}
+
+	}
+public:
+
+
+
+	WrongTypeException(string type1)
+	{
+		setType(type1);
+	}
+
+
+	void  setType(string type1)
+	{
+		try
+		{
+			wrongtype(type1);
+		}
+		catch (const char* err)
+		{
+			cout << err << endl;
+		}
+
+
+	}
+
+	void show()
+	{
+		cout << type;
+	}
+
+};
+
+
+class Water
+{
+private:
+	double depth;
+	double width;
+	double length;
+	string type;
+public:
+
+	Water(double depth1,double length1, double width1,string type1)
+		: depth(depth1), width(width1), length(length1), type(type1)
+      {
+		set( depth,  length,  width,  type);
+	}
+	void set(double depth1, double length1, double width1, string type1)
+	{
+		WrongDepthException d(depth1);
+		WrongLengthException l(length1);
+		WrongTypeException t(type1);
+		WrongWidthException w(width1);
+		cout << "Depth:"; d.show(); cout << "\nLength:"; l.show(); cout << "\nWidth:"; w.show(); cout << "\nType:"; t.show(); cout << "\n\n";
+	}
+
+		
+
+};
+
+
+
+
+
+
+void  main()
+{
+	Water a(5, 5, 5, "river");
+
+	
+}
