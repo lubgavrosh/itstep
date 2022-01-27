@@ -1,0 +1,255 @@
+﻿#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+//1
+__interface Start
+{
+public:
+	virtual void make()
+	{
+		cout << "\nStart maked" << endl;
+		cout << "Health: 0" << endl;
+		cout << "Damage: 0" << endl;
+	}
+};
+class Unit : public Start
+{
+public:
+	virtual void make() override
+	{
+		cout << "\nUnit maked" << endl;
+		cout << "Health: 2" << endl;
+		cout << "Damage: 2" << endl;
+	}
+};
+class Marine : public Start
+{ 
+public:
+	virtual void make() override
+	{
+		cout << "\nMarine maked" << endl;
+		cout << "Health: 8" << endl;
+		cout << "Damage: 9" << endl;
+	}
+};
+
+class CrazyScientist : public Start
+{
+public:
+
+	virtual void make() override
+	{
+		cout << "\nCrazy Scientist maked" << endl;
+		cout << "Health: 4" << endl;
+		cout << "Damage: 10" << endl;
+	}
+};
+
+class MilitaryDoctor : public Start
+{
+public:
+	virtual void make() override
+	{
+		cout << "\nMilitary Doctor maked" << endl;
+		cout << "Health: 9" << endl;
+		cout << "Damage: 6" << endl;
+	}
+};
+
+class Barrack 
+{
+
+public:
+
+	virtual void create()
+	{
+
+		Start* startUnit = new Unit();
+		
+		startUnit->make();
+			
+		
+		
+	}
+	
+};
+
+class Militarybarracks : public Barrack
+{
+public:
+
+	virtual void create()
+	{
+
+		Start* startMarine = new Marine();
+
+		startMarine->make();
+
+
+
+	}
+};
+class Scientistbarraks : public Barrack
+{
+public:
+	
+		
+		virtual void create()
+		{
+
+			Start* startCrazyScientist = new CrazyScientist();
+
+			startCrazyScientist->make();
+
+
+        }
+};
+
+class Medicalbarracks : public Barrack
+{
+public:
+	
+		
+		virtual void create()
+		{
+
+			Start* startMilitaryDoctor = new MilitaryDoctor();
+
+			startMilitaryDoctor->make();
+        }
+};
+
+
+
+
+
+
+
+//2
+unsigned NUM;
+class Weapon
+{
+private:
+	int ID;
+	double caliber;
+	string name;
+
+public:
+
+	Weapon(double caliber1, string name1)
+		:caliber (caliber1), name(name1)
+	{
+		ID = NUM;
+		NUM++;
+	}
+	void operator =(const Weapon& a)
+	{
+		caliber = a.caliber;
+		name = a.name;
+	}
+
+	virtual void Show()
+	{
+		cout << "\nID: " << ID << endl;
+		cout << "Calber: " << caliber << endl;
+		cout << "Name: " << name << endl;
+
+	}
+	
+	int getID() const
+	{
+		return ID;
+	}
+};
+
+
+class Storage
+{
+private:
+	vector<Weapon*> a;
+public:
+
+	void add( Weapon&b)
+	{
+		a.push_back(&b);
+	
+	}
+	void clone(Weapon& b)
+	{
+		show();
+		int n;
+		cout << "Enter ID: ";
+		cin >> n;
+		cout << endl;
+		if (n >= 0)
+		{
+
+			for (int i = 0; i < a.size(); i++)
+			{
+				if (a[i]->getID() == n)
+				{
+					
+					b = *a[i];
+					a.push_back(&b);
+
+				}
+			}
+		}
+	}
+    void show()
+	{
+
+		if (a.size() > 0) {
+			for (int i = 0; i <a.size(); i++)
+			{
+				a[i]->Show();
+			}
+			cout << endl;
+		}
+		else
+			cout << "Storage is empty" << endl;
+
+	}
+
+	
+};
+
+
+
+
+
+
+
+
+
+void main()
+{
+
+	//1 
+	/*Barrack un;
+	un.create();
+
+	Militarybarracks mil;
+	mil.create();
+
+	Medicalbarracks med;
+	med.create();
+
+	Scientistbarraks scie;
+	scie.create();*/
+
+
+	//2
+	Weapon v(7.62, "Ak-47");
+	Weapon d(5.56, "M4A1");
+	Weapon h(5.6, "Micro UZI");
+	Storage a;
+	a.add(v);
+	
+	a.add(d);
+	
+	a.clone(h);
+	a.show();
+}
