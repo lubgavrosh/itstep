@@ -1,1 +1,1 @@
-Hello there are all my done exercise since 2021
+Hello everyone, there is my dyploma project for academy ITSTEP
